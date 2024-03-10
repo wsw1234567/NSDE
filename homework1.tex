@@ -32,23 +32,164 @@
 
 \pagestyle{fancy}
 \fancyhead{}
-\lhead{NAME (put your uID here)}
-\chead{NDE homework \#?}
-\rhead{Date}
+\lhead{吴声炜 (3210102945)}
+\chead{NDE homework \#1}
+\rhead{Date 3/10}
 
 
-\section*{I. Briefly repeat the problem}
+\section*{Exercise 7.14}
+Suppose a grid function $\textbf{g} : \textbf{X} \to \mathbb{R}$ has $\textbf{X} := {{x_1,x_2,\dots,x_N}}, g_1 = O(h), g_N=O(h),$ and $g_j=O(h^2)$ for all $j=2,\dots,N-1$. Show that
+\begin{equation*}
+\lVert\textbf{g}\rVert_\infty = O(h), \lVert\textbf{g}\rVert_1 = O(h^2), \lVert\textbf{g}\rVert_2= O(h^\frac{3}{2}).  
+\end{equation*}
+%\subsection*{I-a} 
 
-\subsection*{I-a} 
+\begin{proof}
+  根据范数定义，我们有
+  \begin{equation*}
+    \lVert\textbf{g}\rVert_\infty = \max_{1 \leq i \leq N}\lvert g_i\rvert = \max(O(h),O(h^2)) = O(h)
+  \end{equation*}
+    \begin{equation*}
+    \lVert\textbf{g}\rVert_1 = h\sum_{i=1}^{N}\lvert g_i\rvert = hO(h) = O(h^2)
+  \end{equation*}
+  \begin{equation*}
+    \lVert\textbf{g}\rVert_2 = (h\sum_{i=1}^{N}\lvert g_i\rvert^2)^{\frac{1}{2}} = (hO(h^2))^{\frac{1}{2}} = O(h^{\frac{3}{2}})
+  \end{equation*}
+\end{proof}
 
-Give your answers here
+%\subsection*{I-b} 
 
-\subsection*{I-b} 
+\section*{Exercise 7.26}
+Show that the set of eigenvectors $w_{k,j} = \sin \frac{jk\pi}{m+1}$ of \textbf{A} in (7.13) is orthogonal, i.e.,
+\[\avg{\textbf{w}_i,\textbf{w}_k} =
+  \begin{cases}
+    0 & \text{if} i \neq k;\\
+    \frac{m+1}{2} & if i = k,\\
+  \end{cases} \]
+where $\avg{\cdot,\cdot}$ denotes the dot product.
 
-\section*{II. Briefly repeat the problem}
+\begin{proof}
+  对$i,k$进行分类讨论。\\
+  case 1 : $i\neq k$时,令$\alpha = \frac{(i-k)\pi}{m+1}, \beta = \frac{(i+k)\pi}{m+1}$,同时$(m+1)\alpha = a\pi, (m+1)\beta = b\pi$,$a,b \in \mathbb{Z}$
+  \begin{align*}
+    \avg{\textbf{w}_i,\textbf{w}_k} ={} & \sum_{j=1}^{m} w_{i,j}w_{k,j} \\
+    ={} & \frac{1}{2}\sum_{j=1}^{m}\lbrack \cos\frac{(i-k)j\pi}{m+1} - \cos\frac{(i+k)j\pi}{m+1}\rbrack \\
+    ={} & \frac{1}{2}Re\lbrack\sum_{j=1}^{m}(e^{\frac{(i-k)j\pi}{m+1}}-e^{\frac{(i+k)j\pi}{m+1}})\rbrack \\
+    ={} & \frac{1}{2}Re(\frac{e^{(m+1)\alpha}-1}{e^{\alpha}-1}-\frac{e^{(m+1)\beta}-1}{e^{\beta}-1}) \\
+    ={} & \frac{1}{2}\lbrack\frac{((-1)^a-1)(\cos\alpha -1)}{2-2\cos\alpha}-\frac{((-1)^b-1)(\cos\beta -1)}{2-2\cos\beta}\rbrack
+  \end{align*}
+  又因为$a,b$奇偶性相同，则$\avg{\textbf{w}_i,\textbf{w}_k} = 0$ \\
+  case 2 : $i = k$时,
+  \begin{align*}
+    \avg{\textbf{w}_i,\textbf{w}_k} ={} & \sum_{j=1}^{m}\sin^2\frac{ji\pi}{m+1} \\
+    ={} & \frac{m}{2} - \frac{1}{2}\sum_{j=1}^{m}\cos\frac{2ji\pi}{m+1} \\
+    ={} & \frac{m}{2} + \frac{1}{2}(\frac{(-1)^{2i}-1}{2} + 1) \\
+    ={} & \frac{m+1}{2}
+  \end{align*}
+\end{proof}
 
-Give your answers here.
+\section*{Exercise 7.37}
+Show that all elements of the first column of $B_E = A_E^{-1}$ are $O(1)$.
+\begin{proof}
+  设$B_E$的第一列为$(x_1,x_2,\dots,x_{m+2})^T$,那么我们就有
+  \begin{equation*}
+    \begin{aligned}
+      -hx_1+hx_2 &= h^2 \\
+      x_1-2x_2+x_3 &= 0 \\
+      x_2-2x_3+x_4 &= 0 \\
+      \vdots \\
+      x_m-2x_{m+1}+x_{m+2} &= 0 \\
+      h^2x_{m+2} &= 0 
+    \end{aligned}
+  \end{equation*}
+     解得
+  \begin{equation*}
+    \begin{aligned}
+      x_k &= -h(m+2-k) (1\leq k\leq m+1)\\
+      x_{m+2} &= 0 
+    \end{aligned}
+  \end{equation*}
+     从而${x_i}$都是$O(1)$
+   \end{proof}
+\section*{Exercise 7.41}
+Show that the LTE of the FD method in EXample 7.40 is
+\begin{equation*}
+  \tau_{i,j} = -\frac{1}{12}h^2\left(\frac{\partial^4 u}{\partial x^4}+\frac{\partial^4 u}{\partial y^4}\right)\bigg|_{(x_i,y_j)} + O(h^4)
+\end{equation*}
+\begin{proof}
+  由泰勒展开可得
+  \begin{align*}
+    u(x_{i+1},y_j) ={} & u(x_i,y_j) + h\pdfFrac{u}{x} + \frac{h^2}{2}\pdfFrac{^2u}{x^2}(x_i,y_j) + \frac{h^3}{6}\pdfFrac{^3u}{x^3}(x_i,y_j) + \frac{h^4}{24}\pdfFrac{^4u}{x^4}(x_i,y_j) + \frac{h^5}{120}\pdfFrac{^5u}{x^5}(x_i,y_j) + O(h^6) \\
+    u(x_{i-1},y_j) ={} & u(x_i,y_j) - h\pdfFrac{u}{x} + \frac{h^2}{2}\pdfFrac{^2u}{x^2}(x_i,y_j) - \frac{h^3}{6}\pdfFrac{^3u}{x^3}(x_i,y_j) + \frac{h^4}{24}\pdfFrac{^4u}{x^4}(x_i,y_j) - \frac{h^5}{120}\pdfFrac{^5u}{x^5}(x_i,y_j) + O(h^6) \\
+    u(x_{i},y_{j+1}) ={} & u(x_i,y_j) + h\pdfFrac{u}{y} + \frac{h^2}{2}\pdfFrac{^2u}{y^2}(x_i,y_j) + \frac{h^3}{6}\pdfFrac{^3u}{y^3}(x_i,y_j) + \frac{h^4}{24}\pdfFrac{^4u}{y^4}(x_i,y_j) + \frac{h^5}{120}\pdfFrac{^5u}{y^5}(x_i,y_j) + O(h^6) \\
+    u(x_{i},y_{j-1}) ={} & u(x_i,y_j) - h\pdfFrac{u}{y} + \frac{h^2}{2}\pdfFrac{^2u}{y^2}(x_i,y_j) - \frac{h^3}{6}\pdfFrac{^3u}{y^3}(x_i,y_j) + \frac{h^4}{24}\pdfFrac{^4u}{y^4}(x_i,y_j) - \frac{h^5}{120}\pdfFrac{^5u}{y^5}(x_i,y_j) + O(h^6)
+  \end{align*}
+    \begin{align*}
+    \tau_{i,j} ={} & -\frac{U_{i-1,j}-2U_{i,j}+U_{i+1,j}}{h^2} - \frac{U_{i,j-1}-2U_{i,j}+U_{i,j+1}}{h^2} - \left( -\pdfFrac{^2u}{x^2}-\pdfFrac{^2u}{y^2}\right)\bigg|_{(x_i,y_j)} \\
+    ={} & -\pdfFrac{^2u}{x^2} - \frac{h^2}{12}\pdfFrac{^4u}{x^4} - \pdfFrac{^2u}{x^2} - \frac{h^2}{12}\pdfFrac{^4u}{x^4} + O(h^4) +\pdfFrac{^2u}{x^2} + \pdfFrac{^2u}{y^2} \\
+    ={} & -\frac{h^2}{12}h^2\left(\frac{\partial^4 u}{\partial x^4}+\frac{\partial^4 u}{\partial y^4}\right)\bigg|_{(x_i,y_j)} + O(h^4) \\
+    \end{align*}
+    
+  \end{proof}
+  \section*{Exercise 7.62}
+  Show that, in Example 7.60, the LTE at an irregular equation-discretization point is $O(h)$ while the LTE at a regular equation-discretization point is $O(h^2)$.
+  \begin{proof}
+    规则边界$\tau_{i,j} = O(h^2)$已证.下证不规则边界\\
+    由泰勒展开可得
+    \begin{align*}
+    \frac{(1+\theta)U_P-U_A-\theta U_W}{\frac{1}{2}\theta(1+\theta)h^2} ={} & \frac{-\frac{h^2}{2}(\theta^2+\theta)\pdfFrac{^2U_P}{x^2}+O(h^3)}{\frac{1}{2}\theta(1+\theta)h^2} \\
+    ={} & -\pdfFrac{^2u}{x^2}\bigg|_P + O(h) \\
+    \end{align*}
+    同样地，有
+    \begin{align*}
+    \frac{(1+\alpha)U_P-U_B-\alpha U_S}{\frac{1}{2}\alpha(1+\alpha)h^2} ={} & \frac{-\frac{h^2}{2}(\alpha^2+\alpha)\pdfFrac{^2U_P}{y^2}+O(h^3)}{\frac{1}{2}\alpha(1+\alpha)h^2} \\
+    ={} & -\pdfFrac{^2u}{y^2}\bigg|_P + O(h) \\
+    \end{align*}
+    从而
+    \begin{equation*}
+      \tau_P = L_AU_P - \left( -\pdfFrac{^2u}{x^2} -\pdfFrac{^2u}{y^2}\right)\bigg|_P = O(h)
+    \end{equation*}
+  \end{proof}
 
+  \section*{Exercise 7.64}
+  Prove Theorem 7.62 by choosing a function $\psi$ to which Lemma 7.57 applies.
+  \begin{proof}
+    $\forall P\in \textbf{X}_1$,令$\widetilde{\phi_{P,1}}=\frac{\phi_P}{C_1}$,就有
+    \begin{equation*}
+      \forall P\in\textbf{X}_{1,\Omega},L_h\widetilde{\phi_{P,1}}\leq -1
+    \end{equation*}
+    仿照定理7.60选取$\psi_{P_1} := E_P + T_1\widetilde{\phi_{P,1}}$,那么我们就有
+    \begin{equation*}
+      L_h\widetilde{\phi_{P,1}} \leq -T_P-T_1 \leq 0
+    \end{equation*}
+    又因为$\widetilde{\phi_{P,1}} \geq 0, \forall Q\in \textbf{X}_{1,\partial\Omega}, E_Q=0$,有$\max_{P\in\textbf{X}_1}\psi_P\geq 0  $.而
+    \begin{align*}
+      E_P \leq {} & \max_{P\in\textbf{X}_1}(E_P+T_1\widetilde{\phi_{P,1}}) \\
+      \leq {} & \max_{Q\in\textbf{X}_{1,\partial\Omega}}(E_Q+T_1\widetilde{\phi_{P,1}}) \\
+      ={} & T_1\max_{Q\in\textbf{X}_{1,\partial\Omega}}(\widetilde{\phi_{P,1}}(Q)) \\
+      ={} & \frac{T_1}{C_1}\max_{Q\in\textbf{X}_{1,\partial\Omega}}(\phi_{P,1}(Q)) \\
+    \end{align*}
+    同理，令$\psi_{P_2} := E_P + T_2\widetilde{\phi_{P,2}}, \widetilde{\phi_{P,2}}=\frac{\phi_P}{C_2}$,可得
+    \begin{equation*}
+      E_p \leq \frac{T_2}{C_2}\max_{Q\in\textbf{X}_{2,\partial\Omega}}(\phi_{P,2}(Q))
+    \end{equation*}
+    再令
+    \begin{equation*}
+      \psi_{P,1} = -E_P + T_1\widetilde{\phi_{P,1}}, \psi_{P,2} = -E_P + T_2\widetilde{\phi_{P,2}}
+    \end{equation*}
+    同理可得
+    \begin{equation*}
+      -E_p \leq \frac{T_1}{C_1}\max_{Q\in\textbf{X}_{1,\partial\Omega}}(\phi_{P,1}(Q)), -E_p \leq \frac{T_2}{C_2}\max_{Q\in\textbf{X}_{2,\partial\Omega}}(\phi_{P,2}(Q))
+    \end{equation*}
+    综上所述，
+    \begin{equation*}
+      \forall P\in\textbf{X}, \lvert E_P\rvert \leq \left( \max_{Q\in\textbf{X}_{\partial\Omega}}\phi(Q) \right)\max\bigg\{ \frac{T_1}{C_1}, \frac{T_2}{C_2} \bigg\}
+      \end{equation*}
+  \end{proof}
+  
+    
+
+  
 \end{document}
 
 %%% Local Variables: 
